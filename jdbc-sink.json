@@ -1,0 +1,19 @@
+{
+    "name": "jdbc-sink",
+    "config": {
+        "value.converter.schema.registry.url": "http://schema-registry:8081",
+        "value.converter.schemas.enable": "true",
+        "name": "JdbcSinkConnector",
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "io.confluent.connect.avro.AvroConverter",
+        "topics": ["student"],
+        "connection.url": "jdbc:postgresql://postgres:5433/exampledb?user=docker&password=docker",
+        "connection.user": "docker",
+        "connection.password": "docker",
+        "table.name.format": "postgres.public.student",
+        "transforms": "unwrap",
+        "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState"
+                                       
+    }
+}

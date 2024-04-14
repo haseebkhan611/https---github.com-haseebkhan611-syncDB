@@ -1,14 +1,22 @@
 {
-  "name": "exampledb-connector",
+  "name": "pg-orders-source",
   "config": {
-    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-    "plugin.name": "pgoutput",
-    "database.hostname": "postgres",
-    "database.port": "5432",
-    "database.user": "docker",
-    "database.password": "docker",
-    "database.dbname": "exampledb",
-    "database.server.name": "postgres",
-    "table.include.list": "public.student"
+      "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+      "database.hostname": "postgres",
+      "database.port": "5432",
+      "database.user": "postgres",
+      "database.password": "postgres",
+      "database.dbname": "postgres",
+      "database.server.name": "myserver",
+      "plugin.name": "pgoutput",
+      "table.include.list": "public.customers",
+      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "transforms": "unwrap,dropTopicPrefix",
+      "transforms.dropTopicPrefix.type": "org.apache.kafka.connect.transforms.RegexRouter",
+      "transforms.dropTopicPrefix.regex": "demo\\.(.*)",
+      "transforms.dropTopicPrefix.replacement": "$1",
+      "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+      "transforms.unwrap.drop.tombstones": true,
+      "transforms.unwrap.delete.handling.mode": "rewrite"
   }
 }

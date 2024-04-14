@@ -9,6 +9,15 @@ services:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=exampledb
+  postgres2:
+    image: debezium/postgres:13
+    container_name: postgres2
+    ports:
+      - 5433:5433
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=exampledb
 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.5.3
