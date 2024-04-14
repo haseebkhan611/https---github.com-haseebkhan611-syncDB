@@ -1,0 +1,44 @@
+curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ --data "@pg-source-config.json"
+
+
+curl -X DELETE localhost:8083/connectors/exampledb-connector
+
+CREATE TABLE student(id integer primary key, name varchar);
+
+ALTER TABLE public.student REPLICA IDENTITY FULL;
+
+INSERT INTO student VALUES (14, 'Aldfice');
+
+SELECT * FROM student;
+
+
+from kafka import KafkaConsumer
+from json import loads
+from kafka.structs import TopicPartition
+
+# Kafka broker configuration
+# bootstrap_servers = 'localhost:9092'
+topic_name = 'myserver.public.customers'
+
+# Create Kafka consumer
+consumer = KafkaConsumer(
+    bootstrap_servers=['172.25.250.154:9092'],
+    auto_offset_reset='earliest',  # Start consuming from the earliest available offset
+    enable_auto_commit=False,       # Commit offsets automatically
+    group_id=None,  # Consumer group ID
+    value_deserializer=lambda x: loads(x.decode('utf-8'))  # Deserialize JSON-encoded message value
+)
+
+consumer.assign([TopicPartition(topic_name, 0), TopicPartition(topic_name, 1)])  # Assign partitions 0 and 1
+
+
+consumer.poll()
+consumer.seek_to_beginning()
+# print('partitions of the topic: ',consumer.partitions_for_topic(topic_name))
+
+print(f"Subscribed to topic: {topic_name}")
+# Start consuming messages
+for message in consumer:
+    print('easter egg')
+    print(f"Received message: {message.value}")
+    # Process the message here...
