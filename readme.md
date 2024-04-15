@@ -18,34 +18,37 @@ docker ps -a
 Run the following command to verify the db are empty:
 ```
 docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER -d $POSTGRES_DB -c "select * from subscription"'
+```
+```
 docker-compose exec test-db bash -c 'psql -U $POSTGRES_USER -d $POSTGRES_DB -c "select * from subscription"'
 ```
 
-Now run the following command to populate the db in postgres (db1):
+The above commands should result in an error as the tables are empty.
+
+Now run the following command create a db in postgres (db1):
 ```
-docker-compose exec postgres bash -c 'psql -U $POSTGRES_USER -d $POSTGRES_DB -c \
-CREATE TABLE subscription (email VARCHAR(255) PRIMARY KEY, status VARCHAR(50)); \
-INSERT INTO subscription (email, status) VALUES \
- ('example1@example.com', 'active'), \
-    ('example2@example.com', 'inactive'),\
-    ('example3@example.com', 'active'),\
-    ('example4@example.com', 'inactive'),\
-    ('example5@example.com', 'active'),\
-    ('example6@example.com', 'inactive'),\
-    ('example7@example.com', 'active'),\
-    ('example8@example.com', 'inactive'),\
-    ('example9@example.com', 'active'),\
-    ('example10@example.com', 'inactive'),\
-    ('example11@example.com', 'active'),\
-    ('example12@example.com', 'inactive'),\
-    ('example13@example.com', 'active'),\
-    ('example14@example.com', 'inactive'),\
-    ('example15@example.com', 'active'),\
-    ('example16@example.com', 'inactive'),\
-    ('example17@example.com', 'active'),\
-    ('example18@example.com', 'inactive'),\
-    ('example19@example.com', 'active'),\
-    ('example20@example.com', 'inactive');
+docker-compose exec postgres bash -c "psql -U \$POSTGRES_USER -d \$POSTGRES_DB -c 'CREATE TABLE subscription (email VARCHAR(255) PRIMARY KEY, status VARCHAR(50));'"
+```
+update the db1 with some data:
+```
+docker-compose exec postgres bash -c "psql -U \$POSTGRES_USER -d \$POSTGRES_DB -c \"INSERT INTO subscription (email, status) VALUES 
+('example1@example.com', 'active'),
+('example2@example.com', 'inactive'),
+('example3@example.com', 'active'),
+('example4@example.com', 'inactive'),
+('example5@example.com', 'active'),
+('example6@example.com', 'inactive'),
+('example7@example.com', 'active'),
+('example8@example.com', 'inactive'),
+('example9@example.com', 'active'),
+('example10@example.com', 'inactive'),
+('example11@example.com', 'active'),
+('example12@example.com', 'inactive'),
+('example13@example.com', 'active'),
+('example14@example.com', 'inactive'),
+('example15@example.com', 'active'),
+('example16@example.com', 'inactive');\""
+
 ```
 
 Verify again using the following commands to check contents of both db's:
@@ -58,6 +61,11 @@ Start the source and sink connectors to link the db's with kafka topics:
 ```
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ --data "@connector.json"
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @test-sink.json
+```
+
+Verify the connectors using this command:
+```
+curl -H "Accept:application/json" localhost:8083/connectors/
 ```
 
 Feel free to use test-db data verification command after each curd operation on postgres db to verify the data replication.
