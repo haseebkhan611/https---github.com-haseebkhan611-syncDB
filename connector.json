@@ -2,16 +2,21 @@
     "name": "exampledb-connector",
     "config": {
       "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+      "tasks.max": "1",
       "plugin.name": "pgoutput",
+      "topic.prefix": "dbserver1",
+      "table.whitelist" : "public.student",
       "database.hostname": "postgres",
       "database.port": "5432",
       "database.user": "docker",
       "database.password": "docker",
       "database.dbname": "exampledb",
       "database.server.name": "postgres",
-      "table.include.list": "public.student",
-      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-      "transforms": "unwrap",
-      "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState"
+      "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
+      "schema.history.internal.kafka.topic": "schema-changes.exampledb",
+      "transforms": "route",
+      "transforms.route.type": "org.apache.kafka.connect.transforms.RegexRouter",
+      "transforms.route.regex": "([^.]+)\\.([^.]+)\\.([^.]+)",
+      "transforms.route.replacement": "$3"
     }
   }

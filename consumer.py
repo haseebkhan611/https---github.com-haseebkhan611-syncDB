@@ -4,7 +4,7 @@ from kafka.structs import TopicPartition
 
 # Kafka broker configuration
 # bootstrap_servers = 'localhost:9092'
-topic_name = 'postgres.public.student'
+topic_name = 'student'
 
 # Create Kafka consumer
 consumer = KafkaConsumer(
