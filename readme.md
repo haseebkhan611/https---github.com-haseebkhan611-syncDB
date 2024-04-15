@@ -77,9 +77,12 @@ docker-compose exec postgres bash -c "psql -U \$POSTGRES_USER -d \$POSTGRES_DB -
 
 Create a new record row in the db1:
 ```
-docker-compose exec postgres bash -c "psql -U \$POSTGRES_USER -d \$POSTGRES_DB -c \"INSERT INTO subscription (email, status) VALUES ('neuroai@x.com', 'active'); UPDATE subscription SET status = 'active' WHERE email = 'example2@example.com';\""
+docker-compose exec postgres bash -c "psql -U \$POSTGRES_USER -d \$POSTGRES_DB -c \"INSERT INTO subscription (email, status) VALUES ('neuroai@x.com', 'active');\""
 ```
 delete a record from db1:
 ```
-docker-compose exec postgres bash -c "psql -U \$POSTGRES_USER -d \$POSTGRES_DB -c \"DELETE FROM subscription WHERE email = 'example5@example.com';\""
+docker-compose exec postgres bash -c "psql -U \$POSTGRES_USER -d \$POSTGRES_DB -c \"DELETE FROM subscription WHERE email = 'neuroai@x.com';\""
 ```
+
+Video Link for the demo:
+https://www.youtube.com/watch?v=YKcMhl4a-5I
