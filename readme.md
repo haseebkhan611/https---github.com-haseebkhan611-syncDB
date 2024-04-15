@@ -125,3 +125,7 @@ docker-compose exec postgres bash -c "psql -U \$POSTGRES_USER -d \$POSTGRES_DB -
 
 Video Link for the demo:
 https://www.youtube.com/watch?v=YKcMhl4a-5I
+
+## References:
+1. https://debezium.io/blog/2017/09/25/streaming-to-another-database/
+2. https://medium.com/geekculture/listen-to-database-changes-with-apache-kafka-35440a3344f0
