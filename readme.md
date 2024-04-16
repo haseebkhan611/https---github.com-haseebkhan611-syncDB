@@ -1,3 +1,6 @@
+## Demo Video
+https://www.youtube.com/watch?v=YKcMhl4a-5I
+
 ## Objective
 Create a microservice to sync data between two databases using Kafka Connect.
 
@@ -123,8 +126,7 @@ delete a record from db1:
 docker-compose exec postgres bash -c "psql -U \$POSTGRES_USER -d \$POSTGRES_DB -c \"DELETE FROM subscription WHERE email = 'neuroai@x.com';\""
 ```
 
-Video Link for the demo:
-https://www.youtube.com/watch?v=YKcMhl4a-5I
+
 
 ## References:
 1. https://debezium.io/blog/2017/09/25/streaming-to-another-database/
